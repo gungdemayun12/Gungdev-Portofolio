@@ -6,11 +6,12 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  animation: fadeIn 0.6s ease-out;
 }
 
 .app main {
   flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
 /* Divider between sections */

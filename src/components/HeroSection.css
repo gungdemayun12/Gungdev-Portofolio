@@ -266,7 +266,7 @@
     align-items: center;
     text-align: center;
     max-width: 100%;
-    margin-top: 40vh; /* Reduced gap */
+    margin-top: 60px; /* Adjusted for better flow */
     gap: 16px;
     padding-top: 20px;
   }

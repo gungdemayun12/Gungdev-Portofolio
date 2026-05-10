@@ -36,13 +36,36 @@ export default function LanyardSection() {
   }, [isInView, isMobile]);
 
   return (
-    <section className="lanyard-section" ref={ref} style={{ height: '100vh', width: '100%', position: 'absolute', top: 0, left: 0, zIndex: 10, pointerEvents: 'none', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingTop: isMobile ? '80px' : '0' }}>
+    <section 
+      className="lanyard-section" 
+      ref={ref} 
+      style={{ 
+        height: isMobile ? '450px' : '100vh', 
+        width: '100%', 
+        position: isMobile ? 'relative' : 'absolute', 
+        top: 0, 
+        left: 0, 
+        zIndex: 5, 
+        pointerEvents: 'none', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'flex-start',
+        marginTop: isMobile ? '-80px' : '0' // Pull it up slightly over the Hero text
+      }}
+    >
       <motion.div
         className="lanyard-canvas-wrapper"
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 1.2 }}
-        style={{ width: isMobile ? '100%' : '50%', height: isMobile ? '60%' : '100%', pointerEvents: showCanvas ? 'auto' : 'none', cursor: showCanvas ? 'grab' : 'default', marginLeft: isMobile ? '0' : '50%' }}
+        style={{ 
+          width: isMobile ? '100%' : '50%', 
+          height: '100%', 
+          pointerEvents: showCanvas ? 'auto' : 'none', 
+          cursor: showCanvas ? 'grab' : 'default', 
+          marginLeft: isMobile ? '0' : '50%',
+          position: 'relative'
+        }}
       >
         {showCanvas ? (
           <Canvas

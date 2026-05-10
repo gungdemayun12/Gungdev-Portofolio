@@ -38,9 +38,8 @@ function App() {
 
       {!isLoading && (
         <div className="app">
-          <Navbar theme={theme} toggleTheme={toggleTheme} />
           <main>
-            <div style={{ position: 'relative' }}>
+            <div className="hero-lanyard-wrapper" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
               <HeroSection />
               <Suspense fallback={null}>
                 <LanyardSection />
@@ -51,6 +50,7 @@ function App() {
             <ContactSection />
           </main>
           <Footer />
+          <Navbar theme={theme} toggleTheme={toggleTheme} />
         </div>
       )}
     </>
