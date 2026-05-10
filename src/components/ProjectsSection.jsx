@@ -194,7 +194,12 @@ export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
   const ref = useRef(null);
-  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   const isInView = useInView(ref, { once: true, margin: isMobile ? '500px' : '0px' });
   const shouldShow = isMobile || isInView;
 

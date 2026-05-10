@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { SiReact, SiNextdotjs, SiHtml5, SiLaravel, SiPhp, SiTailwindcss, SiBootstrap, SiMysql, SiWordpress, SiGithub, SiGit, SiDart, SiFlutter } from 'react-icons/si';
 import { FaFileExcel, FaFileWord, FaFilePowerpoint, FaPaintBrush, FaDatabase, FaJava } from 'react-icons/fa';
@@ -42,7 +42,12 @@ const OFFICE_SKILLS = [
 
 export default function AboutSection() {
   const ref = useRef(null);
-  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   const isInView = useInView(ref, { once: true, margin: isMobile ? '500px' : '0px' });
   const shouldShow = isMobile || isInView;
 

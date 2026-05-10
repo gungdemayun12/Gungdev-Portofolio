@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Send, Mail, MapPin, Phone, MessageCircle } from 'lucide-react';
 import { LinkedinIcon, GithubIcon, InstagramIcon } from './Icons';
@@ -12,7 +12,12 @@ const socials = [
 
 export default function ContactSection() {
   const ref = useRef(null);
-  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   const isInView = useInView(ref, { once: true, margin: isMobile ? '500px' : '0px' });
   const shouldShow = isMobile || isInView;
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
