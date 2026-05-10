@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Play, Pause, X, ChevronLeft, ChevronRight, Volume2, VolumeX } from 'lucide-react';
+import { Play, X } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import './ProjectsSection.css';
 
@@ -257,6 +257,7 @@ export default function ProjectsSection() {
                 key={project.id}
                 project={project}
                 index={i}
+                isMobile={isMobile}
                 onClick={() => setSelectedProject(project)}
               />
             ))}
@@ -276,7 +277,7 @@ export default function ProjectsSection() {
   );
 }
 
-function ProjectCard({ project, index, onClick }) {
+function ProjectCard({ project, index, isMobile, onClick }) {
   const [isHovered, setIsHovered] = useState(false);
   const thumbnail = project.videos?.[0]?.poster || project.images?.[0] || null;
   const hasVideo = project.videos && project.videos.length > 0;
@@ -321,7 +322,7 @@ function ProjectCard({ project, index, onClick }) {
             <div className="project-card-placeholder-grid">
               {[...Array(12)].map((_, i) => (
                 <div key={i} className="project-card-placeholder-block" style={{
-                  opacity: 0.1 + Math.random() * 0.2,
+                  opacity: 0.1 + ((i * 13) % 20) * 0.01,
                   animationDelay: `${i * 0.1}s`,
                 }} />
               ))}

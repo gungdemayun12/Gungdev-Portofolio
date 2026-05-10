@@ -4,6 +4,8 @@ import { ArrowDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from './Icons';
 import './HeroSection.css';
 
+const typingWords = ['Tech Enthusiast', 'Fullstack Developer'];
+
 export default function HeroSection() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -15,7 +17,6 @@ export default function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const titleWords = ['Gungdev'];
-  const typingWords = ['Tech Enthusiast', 'Fullstack Developer'];
 
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
@@ -64,12 +65,12 @@ export default function HeroSection() {
             key={i}
             className="hero-particle"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
-              width: `${2 + Math.random() * 3}px`,
-              height: `${2 + Math.random() * 3}px`,
+              left: `${((i * 13) % 100)}%`,
+              top: `${((i * 29) % 100)}%`,
+              animationDelay: `${((i * 7) % 5)}s`,
+              animationDuration: `${3 + ((i * 11) % 4)}s`,
+              width: `${2 + ((i * 3) % 3)}px`,
+              height: `${2 + ((i * 3) % 3)}px`,
             }}
           />
         ))}

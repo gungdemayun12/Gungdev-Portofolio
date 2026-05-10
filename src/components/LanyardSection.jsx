@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, Suspense } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { useGLTF, useTexture, Environment, Lightformer, Html } from '@react-three/drei';
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
@@ -102,7 +102,11 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
   const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 4, linearDamping: 4 };
   const { nodes, materials } = useGLTF(cardGLB);
   const texture = useTexture(lanyardTexture);
-  const [curve] = useState(() => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]));
+  const [curve] = useState(() => {
+    const c = new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]);
+    c.curveType = 'chordal';
+    return c;
+  });
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
 
@@ -143,8 +147,12 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
     }
   });
 
-  curve.curveType = 'chordal';
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  useEffect(() => {
+    if (texture) {
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      texture.needsUpdate = true;
+    }
+  }, [texture]);
 
   return (
     <>
