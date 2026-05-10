@@ -20,6 +20,11 @@ export default function HeroSection() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   useEffect(() => {
     const word = typingWords[currentWordIndex];
@@ -87,7 +92,7 @@ export default function HeroSection() {
           className="hero-badge"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          transition={{ delay: isMobile ? 0 : 0.2, duration: 0.6 }}
         >
           <span className="hero-badge-dot" />
           <span>Available for work</span>
@@ -99,10 +104,10 @@ export default function HeroSection() {
             <motion.h1
               key={word}
               className="hero-title"
-              initial={{ y: 80, opacity: 0, rotateX: 45 }}
+              initial={{ y: isMobile ? 0 : 80, opacity: 0, rotateX: isMobile ? 0 : 45 }}
               animate={{ y: 0, opacity: 1, rotateX: 0 }}
               transition={{
-                delay: 0.3 + i * 0.15,
+                delay: isMobile ? 0 : 0.3 + i * 0.15,
                 duration: 0.8,
                 ease: [0.4, 0, 0.2, 1],
               }}
@@ -114,7 +119,7 @@ export default function HeroSection() {
              className="hero-typing-text"
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
-             transition={{ delay: 0.6 }}
+             transition={{ delay: isMobile ? 0 : 0.6 }}
              style={{ fontSize: 'clamp(20px, 4vw, 32px)', fontWeight: '500', color: 'var(--text-secondary)', marginTop: '12px' }}
           >
              {currentText}<span className="hero-cursor">|</span>
@@ -126,7 +131,7 @@ export default function HeroSection() {
           className="hero-desc"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.6 }}
+          transition={{ delay: isMobile ? 0 : 0.7, duration: 0.6 }}
         >
           Building modern websites with clean, responsive, and elegant interfaces.
           <br />
@@ -138,7 +143,7 @@ export default function HeroSection() {
           className="hero-tech-stack"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
+          transition={{ delay: isMobile ? 0 : 0.8, duration: 0.6 }}
           style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px', justifyContent: 'flex-start' }}
         >
           {['Laravel'].map(tech => (
@@ -153,7 +158,7 @@ export default function HeroSection() {
           className="hero-cta"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
+          transition={{ delay: isMobile ? 0 : 0.9, duration: 0.6 }}
         >
           <a href="#projects" className="hero-btn hero-btn--primary" onClick={(e) => { e.preventDefault(); document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' }); }}>
             View Projects
@@ -169,7 +174,7 @@ export default function HeroSection() {
           className="hero-socials"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.1, duration: 0.6 }}
+          transition={{ delay: isMobile ? 0 : 1.1, duration: 0.6 }}
         >
           <a href="https://github.com/gungdemayun12" target="_blank" rel="noopener noreferrer" className="hero-social-link" aria-label="GitHub">
             <GithubIcon size={18} />
