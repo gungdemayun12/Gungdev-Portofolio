@@ -11,7 +11,14 @@ import Footer from './components/Footer';
 import './App.css';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    // Skip loading screen on mobile for instant appearance
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      return false;
+    }
+    return true;
+  });
+
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('portfolio-theme');
     return saved || 'dark';
@@ -32,11 +39,11 @@ function App() {
 
   return (
     <>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {isLoading && <LoadingScreen key="loader" onComplete={handleLoadingComplete} />}
       </AnimatePresence>
 
-      <div className={`app ${isLoading ? 'is-loading' : ''}`}>
+      <div className="app">
         <main>
           <div className="hero-lanyard-wrapper" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <HeroSection />
