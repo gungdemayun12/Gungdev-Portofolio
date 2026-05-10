@@ -202,8 +202,8 @@ export default function ProjectsSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isInView = useInView(ref, { once: true, margin: isMobile ? '800px' : '0px' });
-  const shouldShow = isMobile || isInView;
+  const isInView = useInView(ref, { once: true, margin: '0px' });
+  const shouldShow = isInView;
 
   const filteredProjects = activeFilter === 'all'
     ? PROJECTS
@@ -214,7 +214,7 @@ export default function ProjectsSection() {
       <div className="container">
         <motion.div
           className="section-header"
-          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={shouldShow ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
@@ -231,9 +231,9 @@ export default function ProjectsSection() {
 
         <motion.div
           className="projects-filters"
-          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={shouldShow ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: isMobile ? 0 : 0.2, duration: 0.5 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
         >
           {filters.map(filter => (
             <button
@@ -286,10 +286,10 @@ function ProjectCard({ project, index, isMobile, onClick }) {
     <motion.div
       className="project-card"
       layout
-      initial={isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.4, delay: isMobile ? 0 : index * 0.08 }}
+      transition={{ duration: 0.4, delay: index * 0.08 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}

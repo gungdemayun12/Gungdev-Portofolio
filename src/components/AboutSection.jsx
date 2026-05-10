@@ -50,20 +50,21 @@ export default function AboutSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isInView = useInView(ref, { once: true, margin: isMobile ? '800px' : '0px' });
-  const shouldShow = isMobile || isInView;
+  const isInView = useInView(ref, { once: true, margin: '0px' });
+  const shouldShow = isInView || (isMobile && false); // Actually, we want it to animate on scroll on mobile too! Let's just use isInView.
+  const isVisible = isInView;
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: isMobile ? { duration: 0 } : { staggerChildren: 0.1, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
     },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1, transition: { duration: isMobile ? 0 : 0.4 } },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
   };
 
   return (
@@ -72,8 +73,8 @@ export default function AboutSection() {
         {/* Section header */}
         <motion.div
           className="section-header"
-          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          animate={shouldShow ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
           <span className="section-label">About Me</span>
@@ -96,7 +97,7 @@ export default function AboutSection() {
           marginTop: '40px'
         }}>
 
-          <motion.div variants={containerVariants} initial={isMobile ? 'visible' : 'hidden'} animate={shouldShow ? 'visible' : 'hidden'} style={{
+          <motion.div variants={containerVariants} initial="hidden" animate={isVisible ? 'visible' : 'hidden'} style={{
             background: 'var(--bg-card)',
             border: '1px solid var(--border-color)',
             borderRadius: '24px',
@@ -123,7 +124,7 @@ export default function AboutSection() {
             </div>
           </motion.div>
 
-          <motion.div variants={containerVariants} initial={isMobile ? 'visible' : 'hidden'} animate={shouldShow ? 'visible' : 'hidden'} style={{
+          <motion.div variants={containerVariants} initial="hidden" animate={isVisible ? 'visible' : 'hidden'} style={{
             background: 'var(--bg-card)',
             border: '1px solid var(--border-color)',
             borderRadius: '24px',
