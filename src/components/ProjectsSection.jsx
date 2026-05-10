@@ -6,11 +6,27 @@ import './ProjectsSection.css';
 
 const PROJECTS = [
   {
+    id: 11,
+    title: "Boarding House Management System",
+    description: "A comprehensive boarding house platform featuring room search, booking, payment gateway integration, and dedicated dashboards for both tenants and administrators.",
+    longDesc: "A complete boarding house management and payment website platform.\n\nFor users, it offers an easy search and booking process for boarding houses, seamlessly integrated with a payment gateway for direct checkout. The customer dashboard allows tenants to manage their profiles, view payment history, and check active rooms.\n\nFor administrators, the dashboard provides extensive management tools for rooms, bookings, users, and income/revenue tracking, delivering a centralized and comprehensive solution for property management.",
+    tech: ["Laravel", "PHP", "Tailwind CSS", "JavaScript", "MySQL"],
+    github: null,
+    images: ["/bale kos1"],
+    videos: [
+      { src: "/videos/bale kos1.mp4" },
+      { src: "/videos/bale kos2.mp4" },
+    ],
+    category: "Full-Stack / Management",
+    type: "Website",
+    thumbnailColor: "#162447"
+  },
+  {
     id: 1,
     title: "POS Cashier System for SMEs",
     description: "A digital Point of Sale (POS) system designed to help small and medium businesses manage transactions and monitor revenue efficiently.",
     longDesc: "A web-based Point of Sale (POS) system developed as a digital solution for small and medium enterprises (SMEs) to replace manual cashier processes. The system streamlines transaction recording, product management, and sales monitoring within an integrated platform.\n\nDesigned to improve operational efficiency, the application enables business owners to manage daily transactions digitally while maintaining structured financial records and real-time business performance tracking.",
-    tech: ["Laravel", "JavaScript", "Tailwind CSS", "MySQL"],
+    tech: ["Laravel", "PHP", "JavaScript", "Tailwind CSS", "MySQL"],
     github: null,
     images: ["/pos1.webp", "/pos2.webp", "/pos3.webp", "/pos4.webp", "/pos5.webp", "/pos6.webp", "/pos7.webp", "/pos8.webp", "/pos9.webp", "/pos10.webp"],
     videos: [
@@ -25,7 +41,7 @@ const PROJECTS = [
     title: "Clothing E-Commerce Website",
     description: "A premium full-stack clothing e-commerce platform with integrated secure payment gateway and advanced management.",
     longDesc: "A sophisticated full-stack clothing e-commerce application built with Laravel and Blade. The platform features a seamless shopping experience integrated with a secure payment gateway, allowing customers to complete transactions safely and efficiently. It includes a comprehensive admin dashboard for inventory tracking, order management, and real-time sales analytics, providing a complete end-to-end solution for modern fashion retail.",
-    tech: ["Laravel", "Tailwind CSS", "JavaScript", "MySQL"],
+    tech: ["Laravel", "PHP", "Tailwind CSS", "JavaScript", "MySQL"],
     github: null,
     images: ["/ecommerce1.webp", "/ecommerce2.webp", "/ecommerce3.webp", "/ecommerce4.webp", "/ecommerce5.webp", "/ecommerce6.webp", "/ecommerce7.webp", "/ecommerce8.webp", "/ecommerce9.webp"],
     videos: [
@@ -41,7 +57,7 @@ const PROJECTS = [
     title: "Phone Repair Queue System",
     description: "A digital queue management system designed to streamline customer flow and service operations in phone repair shops.",
     longDesc: "A web-based queue management system developed to optimize service flow in mobile phone repair shops. The system allows customers to take queue numbers digitally and monitor their position in line through an integrated tracking mechanism.",
-    tech: ["Laravel", "JavaScript", "Tailwind CSS", "MySQL"],
+    tech: ["Laravel", "PHP", "JavaScript", "Tailwind CSS", "MySQL"],
     github: null,
     images: ["/queue service system"],
     videos: [
@@ -56,7 +72,7 @@ const PROJECTS = [
     title: "Gym Management System",
     description: "A web-based gym management system designed to help fitness centers manage members, membership packages, and revenue efficiently.",
     longDesc: "A web-based Gym Management System developed to streamline daily operations in fitness centers and gyms. The platform provides an integrated solution for managing gym members, membership packages, and overall business revenue within a centralized management system.\n\nAdministrators can register and manage member data, organize different gym membership packages, and monitor income generated from subscriptions and services. The system helps gym owners maintain structured member records while gaining clear insights into business performance and operational activity.\n\nTo enhance usability and user experience, the application also includes a Dark Mode feature that allows users to switch between light and dark interface themes, providing a more comfortable visual experience during extended use.",
-    tech: ["Laravel", "JavaScript", "Tailwind CSS", "MySQL"],
+    tech: ["Laravel", "PHP", "JavaScript", "Tailwind CSS", "MySQL"],
     github: null,
     images: ["/gym management system"],
     videos: [
@@ -102,7 +118,7 @@ const PROJECTS = [
     title: "Tour Car Charter Bali",
     description: "A full-stack car charter and tour booking platform for Bali with comprehensive admin dashboard, customer management, and booking system.",
     longDesc: "Tour Car Charter Bali is a full-stack web application built with Laravel, JavaScript, and Tailwind CSS that provides a complete solution for car charter and tour services in Bali. The platform features a powerful admin dashboard with real-time booking management, customer profiles, revenue analytics, fleet management, and driver scheduling.\n\nCustomers can browse available tour packages, check pricing, make bookings, manage their profiles, and receive digital receipts. The admin panel includes advanced features such as booking calendar overview, customer database, financial reports, tour package management, and driver assignment — all designed to streamline operations for tour businesses.",
-    tech: ["Laravel", "JavaScript", "Tailwind CSS", "MySQL"],
+    tech: ["Laravel", "PHP", "JavaScript", "Tailwind CSS", "MySQL"],
     github: null,
     images: ["/portofolio.webp"],
     videos: [
@@ -173,6 +189,7 @@ const filters = [
 
 // Map tech to actual SVG logos
 const techIcons = {
+  "PHP": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg",
   "React": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
   "Laravel": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg",
   "JavaScript": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
