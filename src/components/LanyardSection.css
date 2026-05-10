@@ -21,10 +21,31 @@
   cursor: crosshair;
 }
 
-.lanyard-canvas {
-  display: block;
+.lanyard-mobile-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-secondary);
+  gap: 16px;
+}
+
+.lanyard-placeholder-image {
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.lanyard-placeholder-copy {
+  max-width: 480px;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .lanyard-hint {

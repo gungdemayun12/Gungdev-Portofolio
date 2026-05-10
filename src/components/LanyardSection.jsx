@@ -16,12 +16,19 @@ export default function LanyardSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: '-100px' });
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [showCanvas, setShowCanvas] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    if (!isMobile && isInView) {
+      setShowCanvas(true);
+    }
+  }, [isMobile, isInView]);
 
   return (
     <section className="lanyard-section" ref={ref} style={{ height: '100vh', width: '100%', position: 'absolute', top: 0, left: 0, zIndex: 10, pointerEvents: 'none', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingTop: isMobile ? '80px' : '0' }}>
@@ -30,24 +37,34 @@ export default function LanyardSection() {
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 1.2 }}
-        style={{ width: isMobile ? '100%' : '50%', height: isMobile ? '60%' : '100%', pointerEvents: 'auto', cursor: 'grab', marginLeft: isMobile ? '0' : '50%' }}
+        style={{ width: isMobile ? '100%' : '50%', height: isMobile ? '60%' : '100%', pointerEvents: showCanvas ? 'auto' : 'none', cursor: showCanvas ? 'grab' : 'default', marginLeft: isMobile ? '0' : '50%' }}
       >
-        <Canvas
-          camera={{ position: [0, 0, 30], fov: 20 }}
-          dpr={[1, isMobile ? 1.5 : 2]}
-          gl={{ alpha: true }}
-        >
-          <ambientLight intensity={Math.PI} />
-          <Physics gravity={[0, -40, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
-            <Band isMobile={isMobile} />
-          </Physics>
-          <Environment blur={0.75}>
-            <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-            <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-            <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-            <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
-          </Environment>
-        </Canvas>
+        {showCanvas ? (
+          <Canvas
+            camera={{ position: [0, 0, 30], fov: 20 }}
+            dpr={[1, isMobile ? 1.5 : 2]}
+            gl={{ alpha: true }}
+          >
+            <ambientLight intensity={Math.PI} />
+            <Physics gravity={[0, -40, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+              <Band isMobile={isMobile} />
+            </Physics>
+            <Environment blur={0.75}>
+              <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+              <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+              <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+              <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
+            </Environment>
+          </Canvas>
+        ) : (
+          <div className="lanyard-mobile-fallback">
+            <img src={lanyardTexture} alt="Lanyard preview" className="lanyard-placeholder-image" />
+            <div className="lanyard-placeholder-copy">
+              <strong>Interactive badge</strong>
+              <p>Tap desktop view to see the full lanyard experience.</p>
+            </div>
+          </div>
+        )}
       </motion.div>
       {!isMobile && (
         <div className="lanyard-hint" style={{ position: 'absolute', bottom: '40px', color: 'var(--text-secondary)', fontSize: '14px', pointerEvents: 'none', opacity: 0.7 }}>

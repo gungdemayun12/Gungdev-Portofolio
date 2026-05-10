@@ -269,15 +269,8 @@ export default function ProjectsSection() {
 
 function ProjectCard({ project, index, onClick }) {
   const [isHovered, setIsHovered] = useState(false);
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (isHovered && videoRef.current) {
-      videoRef.current.play().catch(() => { });
-    } else if (!isHovered && videoRef.current) {
-      videoRef.current.pause();
-    }
-  }, [isHovered]);
+  const thumbnail = project.videos?.[0]?.poster || project.images?.[0] || null;
+  const hasVideo = project.videos && project.videos.length > 0;
 
   return (
     <motion.div
@@ -293,16 +286,25 @@ function ProjectCard({ project, index, onClick }) {
       whileHover={{ y: -6 }}
     >
       <div className="project-card-media" style={{ background: project.thumbnailColor }}>
-        {project.videos && project.videos.length > 0 ? (
+        {hasVideo ? (
           <video
-            ref={videoRef}
+            poster={thumbnail || undefined}
             src={project.videos[0].src}
             className="project-card-video"
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
+            controls={false}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        ) : thumbnail ? (
+          <img
+            src={thumbnail}
+            alt={`${project.title} thumbnail`}
+            className="project-card-image"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="project-card-placeholder">
