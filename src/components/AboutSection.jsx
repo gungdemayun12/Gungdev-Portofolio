@@ -42,7 +42,9 @@ const OFFICE_SKILLS = [
 
 export default function AboutSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '0px' });
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const isInView = useInView(ref, { once: true, margin: isMobile ? '500px' : '0px' });
+  const shouldShow = isMobile || isInView;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -63,8 +65,8 @@ export default function AboutSection() {
         {/* Section header */}
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          animate={shouldShow ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
           <span className="section-label">About Me</span>
@@ -87,7 +89,7 @@ export default function AboutSection() {
           marginTop: '40px'
         }}>
 
-          <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} style={{
+          <motion.div variants={containerVariants} initial={isMobile ? 'visible' : 'hidden'} animate={shouldShow ? 'visible' : 'hidden'} style={{
             background: 'var(--bg-card)',
             border: '1px solid var(--border-color)',
             borderRadius: '24px',

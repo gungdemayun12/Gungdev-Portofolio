@@ -14,8 +14,10 @@ export default function Navbar({ theme, toggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
@@ -49,8 +51,8 @@ export default function Navbar({ theme, toggleTheme }) {
     <>
       <motion.nav
         className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        initial={isMobile ? { y: 0, opacity: 1 } : { y: -100 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
       >
         <div className="navbar-inner container">

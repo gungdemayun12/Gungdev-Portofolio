@@ -12,7 +12,9 @@ const socials = [
 
 export default function ContactSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '0px' });
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const isInView = useInView(ref, { once: true, margin: isMobile ? '500px' : '0px' });
+  const shouldShow = isMobile || isInView;
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSending, setIsSending] = useState(false);
 
@@ -38,8 +40,8 @@ export default function ContactSection() {
         {/* Section header */}
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          animate={shouldShow ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
           <span className="section-label">Contact</span>
@@ -57,8 +59,8 @@ export default function ContactSection() {
           <motion.form
             className="contact-form"
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            animate={shouldShow ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
             <div className="contact-form-group">
@@ -123,8 +125,8 @@ export default function ContactSection() {
           {/* Contact info */}
           <motion.div
             className="contact-info"
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            animate={shouldShow ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
             {/* Info cards */}

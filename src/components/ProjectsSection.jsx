@@ -194,7 +194,9 @@ export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '0px' });
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const isInView = useInView(ref, { once: true, margin: isMobile ? '500px' : '0px' });
+  const shouldShow = isMobile || isInView;
 
   const filteredProjects = activeFilter === 'all'
     ? PROJECTS
@@ -205,8 +207,8 @@ export default function ProjectsSection() {
       <div className="container">
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          animate={shouldShow ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
           <span className="section-label">Projects</span>
@@ -276,7 +278,7 @@ function ProjectCard({ project, index, onClick }) {
     <motion.div
       className="project-card"
       layout
-      initial={{ opacity: 0, y: 30 }}
+      initial={typeof window !== 'undefined' && window.innerWidth < 768 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
@@ -295,7 +297,7 @@ function ProjectCard({ project, index, onClick }) {
             autoPlay
             loop
             playsInline
-            preload="metadata"
+            preload={typeof window !== 'undefined' && window.innerWidth < 768 ? "none" : "metadata"}
             controls={false}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
