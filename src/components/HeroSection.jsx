@@ -80,7 +80,7 @@ export default function HeroSection() {
         {/* Mobile-only profile image */}
         <motion.div 
           className="hero-mobile-profile"
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: isMobile ? 1 : 0, scale: isMobile ? 1 : 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
         >
@@ -93,7 +93,7 @@ export default function HeroSection() {
         {/* Status badge */}
         <motion.div
           className="hero-badge"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0, duration: 0.6 }}
         >
@@ -107,7 +107,7 @@ export default function HeroSection() {
             <motion.h1
               key={word}
               className="hero-title"
-              initial={{ y: isMobile ? 0 : 80, opacity: 0, rotateX: isMobile ? 0 : 45 }}
+              initial={{ y: isMobile ? 0 : 80, opacity: isMobile ? 1 : 0, rotateX: isMobile ? 0 : 45 }}
               animate={{ y: 0, opacity: 1, rotateX: 0 }}
               transition={{
                 delay: isMobile ? 0 : 0.3 + i * 0.15,
@@ -120,7 +120,7 @@ export default function HeroSection() {
           ))}
           <motion.h2
              className="hero-typing-text"
-             initial={{ opacity: 0 }}
+             initial={{ opacity: isMobile ? 1 : 0 }}
              animate={{ opacity: 1 }}
              transition={{ delay: isMobile ? 0.2 : 0.6 }}
              style={{ fontSize: 'clamp(20px, 4vw, 32px)', fontWeight: '500', color: 'var(--text-secondary)', marginTop: '12px' }}
@@ -132,7 +132,7 @@ export default function HeroSection() {
         {/* Description */}
         <motion.p
           className="hero-desc"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: isMobile ? 0.3 : 0.7, duration: 0.6 }}
         >
@@ -144,7 +144,7 @@ export default function HeroSection() {
         {/* Tech Stack Pills */}
         <motion.div
           className="hero-tech-stack"
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: isMobile ? 0 : 0.8, duration: 0.6 }}
           style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px', justifyContent: 'flex-start' }}
@@ -159,7 +159,7 @@ export default function HeroSection() {
         {/* CTA Buttons */}
         <motion.div
           className="hero-cta"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: isMobile ? 0 : 0.9, duration: 0.6 }}
         >
@@ -175,7 +175,7 @@ export default function HeroSection() {
         {/* Social links */}
         <motion.div
           className="hero-socials"
-          initial={{ opacity: 0 }}
+          initial={{ opacity: isMobile ? 1 : 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: isMobile ? 0 : 1.1, duration: 0.6 }}
         >

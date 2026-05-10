@@ -305,7 +305,7 @@ function ProjectCard({ project, index, isMobile, onClick }) {
             autoPlay
             loop
             playsInline
-            preload={typeof window !== 'undefined' && window.innerWidth < 768 ? "none" : "metadata"}
+            preload="metadata"
             controls={false}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
@@ -314,8 +314,6 @@ function ProjectCard({ project, index, isMobile, onClick }) {
             src={thumbnail}
             alt={`${project.title} thumbnail`}
             className="project-card-image"
-            loading="lazy"
-            decoding="async"
           />
         ) : (
           <div className="project-card-placeholder">
