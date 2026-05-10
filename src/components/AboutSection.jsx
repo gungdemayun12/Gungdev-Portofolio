@@ -57,13 +57,13 @@ export default function AboutSection() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+      transition: isMobile ? { duration: 0 } : { staggerChildren: 0.1, delayChildren: 0.2 },
     },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
+    visible: { opacity: 1, scale: 1, transition: { duration: isMobile ? 0 : 0.4 } },
   };
 
   return (
@@ -123,7 +123,7 @@ export default function AboutSection() {
             </div>
           </motion.div>
 
-          <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} style={{
+          <motion.div variants={containerVariants} initial={isMobile ? 'visible' : 'hidden'} animate={shouldShow ? 'visible' : 'hidden'} style={{
             background: 'var(--bg-card)',
             border: '1px solid var(--border-color)',
             borderRadius: '24px',
