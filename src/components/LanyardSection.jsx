@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useEffect, useRef, useState, Suspense } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { useGLTF, useTexture, Environment, Lightformer, Html } from '@react-three/drei';
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
@@ -26,9 +26,14 @@ export default function LanyardSection() {
 
   useEffect(() => {
     if (isInView) {
-      setShowCanvas(true);
+      // Delay canvas loading on mobile to allow other UI elements to render first
+      const delay = isMobile ? 1500 : 500;
+      const timer = setTimeout(() => {
+        setShowCanvas(true);
+      }, delay);
+      return () => clearTimeout(timer);
     }
-  }, [isInView]);
+  }, [isInView, isMobile]);
 
   return (
     <section className="lanyard-section" ref={ref} style={{ height: '100vh', width: '100%', position: 'absolute', top: 0, left: 0, zIndex: 10, pointerEvents: 'none', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingTop: isMobile ? '80px' : '0' }}>
@@ -43,18 +48,20 @@ export default function LanyardSection() {
           <Canvas
             camera={{ position: [0, 0, 30], fov: 20 }}
             dpr={[isMobile ? 0.5 : 1, isMobile ? 1 : 2]}
-            gl={{ alpha: true, powerPreference: "high-performance" }}
+            gl={{ alpha: true, antialias: !isMobile, powerPreference: "high-performance" }}
           >
-            <ambientLight intensity={Math.PI} />
-            <Physics gravity={[0, -40, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
-              <Band isMobile={isMobile} />
-            </Physics>
-            <Environment blur={0.75}>
-              <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-              <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-              <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
-              <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
-            </Environment>
+            <Suspense fallback={null}>
+              <ambientLight intensity={Math.PI} />
+              <Physics gravity={[0, -40, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+                <Band isMobile={isMobile} />
+              </Physics>
+              <Environment blur={0.75}>
+                <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+                <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+                <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+                <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
+              </Environment>
+            </Suspense>
           </Canvas>
         ) : (
           <div className="lanyard-mobile-fallback">

@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
-import LanyardSection from './components/LanyardSection';
+const LanyardSection = lazy(() => import('./components/LanyardSection'));
 import AboutSection from './components/AboutSection';
 import ProjectsSection from './components/ProjectsSection';
 import ContactSection from './components/ContactSection';
@@ -42,7 +42,9 @@ function App() {
           <main>
             <div style={{ position: 'relative' }}>
               <HeroSection />
-              <LanyardSection />
+              <Suspense fallback={null}>
+                <LanyardSection />
+              </Suspense>
             </div>
             <AboutSection />
             <ProjectsSection />
