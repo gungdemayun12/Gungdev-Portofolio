@@ -194,7 +194,7 @@ export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '0px' });
 
   const filteredProjects = activeFilter === 'all'
     ? PROJECTS
@@ -292,6 +292,7 @@ function ProjectCard({ project, index, onClick }) {
             src={project.videos[0].src}
             className="project-card-video"
             muted
+            autoPlay
             loop
             playsInline
             preload="metadata"

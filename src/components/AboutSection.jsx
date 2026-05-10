@@ -42,7 +42,7 @@ const OFFICE_SKILLS = [
 
 export default function AboutSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '0px' });
 
   const containerVariants = {
     hidden: { opacity: 0 },

@@ -14,7 +14,7 @@ extend({ MeshLineGeometry, MeshLineMaterial });
 
 export default function LanyardSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, margin: '-100px' });
+  const isInView = useInView(ref, { once: false, margin: '0px' });
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
   const [showCanvas, setShowCanvas] = useState(false);
 
@@ -25,10 +25,10 @@ export default function LanyardSection() {
   }, []);
 
   useEffect(() => {
-    if (!isMobile && isInView) {
+    if (isInView) {
       setShowCanvas(true);
     }
-  }, [isMobile, isInView]);
+  }, [isInView]);
 
   return (
     <section className="lanyard-section" ref={ref} style={{ height: '100vh', width: '100%', position: 'absolute', top: 0, left: 0, zIndex: 10, pointerEvents: 'none', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingTop: isMobile ? '80px' : '0' }}>
@@ -42,8 +42,8 @@ export default function LanyardSection() {
         {showCanvas ? (
           <Canvas
             camera={{ position: [0, 0, 30], fov: 20 }}
-            dpr={[1, isMobile ? 1.5 : 2]}
-            gl={{ alpha: true }}
+            dpr={[isMobile ? 0.5 : 1, isMobile ? 1 : 2]}
+            gl={{ alpha: true, powerPreference: "high-performance" }}
           >
             <ambientLight intensity={Math.PI} />
             <Physics gravity={[0, -40, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
