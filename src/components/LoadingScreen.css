@@ -1,0 +1,110 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000; /* Pure black background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loading-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.loading-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.loading-icons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.loading-icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.loading-text-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.loading-text-small {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+  transform: scaleX(1.1);
+}
+
+.loading-text-large {
+  font-family: 'Inter', sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.04em;
+  transform: scaleX(1.3);
+  white-space: nowrap;
+}
+
+.loading-pill {
+  margin-top: 16px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  padding: 6px 16px;
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-family: monospace;
+  position: relative;
+  z-index: 20;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .loading-icon-circle {
+    width: 32px;
+    height: 32px;
+  }
+  .loading-icons {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .loading-text-small {
+    font-size: 18px;
+  }
+  .loading-text-large {
+    font-size: 28px;
+    transform: scaleX(1.2);
+  }
+  .loading-pill {
+    margin-top: 12px;
+    font-size: 10px;
+  }
+}
