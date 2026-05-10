@@ -32,27 +32,25 @@ function App() {
 
   return (
     <>
-      <AnimatePresence>
-        {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
+      <AnimatePresence mode="wait">
+        {isLoading && <LoadingScreen key="loader" onComplete={handleLoadingComplete} />}
       </AnimatePresence>
 
-      {!isLoading && (
-        <div className="app">
-          <main>
-            <div className="hero-lanyard-wrapper" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-              <HeroSection />
-              <Suspense fallback={null}>
-                <LanyardSection />
-              </Suspense>
-            </div>
-            <AboutSection />
-            <ProjectsSection />
-            <ContactSection />
-          </main>
-          <Footer />
-          <Navbar theme={theme} toggleTheme={toggleTheme} />
-        </div>
-      )}
+      <div className={`app ${isLoading ? 'is-loading' : ''}`}>
+        <main>
+          <div className="hero-lanyard-wrapper" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <HeroSection />
+            <Suspense fallback={null}>
+              <LanyardSection />
+            </Suspense>
+          </div>
+          <AboutSection />
+          <ProjectsSection />
+          <ContactSection />
+        </main>
+        <Footer />
+        <Navbar theme={theme} toggleTheme={toggleTheme} />
+      </div>
     </>
   );
 }

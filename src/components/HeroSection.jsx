@@ -20,10 +20,12 @@ export default function HeroSection() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
@@ -55,9 +57,9 @@ export default function HeroSection() {
 
       {/* Grid background is now global on body */}
 
-      {/* Floating particles */}
+      {/* Floating particles - reduced on mobile */}
       <div className="hero-particles">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(isMobile ? 8 : 20)].map((_, i) => (
           <div
             key={i}
             className="hero-particle"
@@ -92,7 +94,7 @@ export default function HeroSection() {
           className="hero-badge"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: isMobile ? 0 : 0.2, duration: 0.6 }}
+          transition={{ delay: 0, duration: 0.6 }}
         >
           <span className="hero-badge-dot" />
           <span>Available for work</span>
@@ -119,7 +121,7 @@ export default function HeroSection() {
              className="hero-typing-text"
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
-             transition={{ delay: isMobile ? 0 : 0.6 }}
+             transition={{ delay: isMobile ? 0.2 : 0.6 }}
              style={{ fontSize: 'clamp(20px, 4vw, 32px)', fontWeight: '500', color: 'var(--text-secondary)', marginTop: '12px' }}
           >
              {currentText}<span className="hero-cursor">|</span>
@@ -131,7 +133,7 @@ export default function HeroSection() {
           className="hero-desc"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: isMobile ? 0 : 0.7, duration: 0.6 }}
+          transition={{ delay: isMobile ? 0.3 : 0.7, duration: 0.6 }}
         >
           Building modern websites with clean, responsive, and elegant interfaces.
           <br />

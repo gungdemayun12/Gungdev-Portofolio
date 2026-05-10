@@ -194,13 +194,15 @@ export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
   const ref = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
   
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isInView = useInView(ref, { once: true, margin: isMobile ? '500px' : '0px' });
+  const isInView = useInView(ref, { once: true, margin: isMobile ? '800px' : '0px' });
   const shouldShow = isMobile || isInView;
 
   const filteredProjects = activeFilter === 'all'
@@ -229,9 +231,9 @@ export default function ProjectsSection() {
 
         <motion.div
           className="projects-filters"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2, duration: 0.5 }}
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={shouldShow ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: isMobile ? 0 : 0.2, duration: 0.5 }}
         >
           {filters.map(filter => (
             <button
@@ -283,10 +285,10 @@ function ProjectCard({ project, index, onClick }) {
     <motion.div
       className="project-card"
       layout
-      initial={typeof window !== 'undefined' && window.innerWidth < 768 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.4, delay: index * 0.08 }}
+      transition={{ duration: 0.4, delay: isMobile ? 0 : index * 0.08 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}

@@ -7,9 +7,14 @@ export default function LoadingScreen({ onComplete }) {
   const [phase, setPhase] = useState('intro'); // intro -> exit -> done
 
   useEffect(() => {
+    // Check if mobile for even faster loading
+    const isMobile = window.innerWidth < 768;
+    const introDuration = isMobile ? 800 : 1200;
+    const exitDuration = isMobile ? 1500 : 2000;
+
     // Keep the loading screen visible for a few seconds, then exit
-    const timer1 = setTimeout(() => setPhase('exit'), 2800);
-    const timer2 = setTimeout(() => onComplete(), 3600);
+    const timer1 = setTimeout(() => setPhase('exit'), introDuration);
+    const timer2 = setTimeout(() => onComplete(), exitDuration);
 
     return () => {
       clearTimeout(timer1);
