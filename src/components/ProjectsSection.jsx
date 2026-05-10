@@ -305,7 +305,7 @@ function ProjectCard({ project, index, isMobile, onClick }) {
             autoPlay
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             controls={false}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
