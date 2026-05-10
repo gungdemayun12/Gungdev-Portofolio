@@ -35,22 +35,23 @@ export default function LanyardSection() {
     }
   }, [isInView, isMobile]);
 
+  if (isMobile) return null;
+
   return (
     <section 
       className="lanyard-section" 
       ref={ref} 
       style={{ 
-        height: isMobile ? '450px' : '100vh', 
+        height: '100vh', 
         width: '100%', 
-        position: isMobile ? 'relative' : 'absolute', 
+        position: 'absolute', 
         top: 0, 
         left: 0, 
         zIndex: 5, 
         pointerEvents: 'none', 
         display: 'flex', 
         justifyContent: 'center', 
-        alignItems: 'flex-start',
-        marginTop: isMobile ? '-80px' : '0' // Pull it up slightly over the Hero text
+        alignItems: 'flex-start'
       }}
     >
       <motion.div
@@ -59,24 +60,24 @@ export default function LanyardSection() {
         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 1.2 }}
         style={{ 
-          width: isMobile ? '100%' : '50%', 
+          width: '50%', 
           height: '100%', 
           pointerEvents: showCanvas ? 'auto' : 'none', 
           cursor: showCanvas ? 'grab' : 'default', 
-          marginLeft: isMobile ? '0' : '50%',
+          marginLeft: '50%',
           position: 'relative'
         }}
       >
-        {showCanvas ? (
+        {showCanvas && (
           <Canvas
             camera={{ position: [0, 0, 30], fov: 20 }}
-            dpr={[isMobile ? 0.5 : 1, isMobile ? 1 : 2]}
-            gl={{ alpha: true, antialias: !isMobile, powerPreference: "high-performance" }}
+            dpr={[1, 2]}
+            gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
           >
             <Suspense fallback={null}>
               <ambientLight intensity={Math.PI} />
-              <Physics gravity={[0, -40, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
-                <Band isMobile={isMobile} />
+              <Physics gravity={[0, -40, 0]} timeStep={1 / 60}>
+                <Band isMobile={false} />
               </Physics>
               <Environment blur={0.75}>
                 <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
@@ -86,21 +87,11 @@ export default function LanyardSection() {
               </Environment>
             </Suspense>
           </Canvas>
-        ) : (
-          <div className="lanyard-mobile-fallback">
-            <img src={lanyardTexture} alt="Lanyard preview" className="lanyard-placeholder-image" />
-            <div className="lanyard-placeholder-copy">
-              <strong>Interactive badge</strong>
-              <p>Tap desktop view to see the full lanyard experience.</p>
-            </div>
-          </div>
         )}
       </motion.div>
-      {!isMobile && (
-        <div className="lanyard-hint" style={{ position: 'absolute', bottom: '40px', color: 'var(--text-secondary)', fontSize: '14px', pointerEvents: 'none', opacity: 0.7 }}>
-          <span>↔ Drag the badge to interact</span>
-        </div>
-      )}
+      <div className="lanyard-hint" style={{ position: 'absolute', bottom: '40px', color: 'var(--text-secondary)', fontSize: '14px', pointerEvents: 'none', opacity: 0.7 }}>
+        <span>↔ Drag the badge to interact</span>
+      </div>
     </section>
   );
 }

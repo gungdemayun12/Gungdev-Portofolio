@@ -69,6 +69,19 @@ export default function HeroSection() {
       </div>
 
       <motion.div className="hero-content container" style={{ y, opacity }}>
+        {/* Mobile-only profile image */}
+        <motion.div 
+          className="hero-mobile-profile"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="hero-mobile-image-wrapper">
+            <img src="/profil.jpg" alt="Gungdev" className="hero-mobile-image" />
+          </div>
+          <div className="hero-mobile-glow" />
+        </motion.div>
+
         {/* Status badge */}
         <motion.div
           className="hero-badge"
